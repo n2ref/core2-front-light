@@ -1,0 +1,29 @@
+<tr class="template-upload">
+	<td>
+		<span class="preview"></span>
+	</td>
+	<td>
+		<p class="name">{%=file.name%}</p>
+		<strong class="error text-danger"></strong>
+	</td>
+	<td>
+		<p class="size">{%=o.formatFileSize(file.size)%}</p>
+		{% if (!o.files.error) { %}
+		<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+		{% } %}
+	</td>
+	<td>
+		{% if (!o.files.error && !i && !o.options.autoUpload) { %}
+		<button class="btn btn-primary start buttonSmall">
+			<i class="glyphicon glyphicon-upload"></i>
+			<span>Старт</span>
+		</button>
+		{% } %}
+		{% if (!i) { %}
+		<button class="btn btn-warning btn-sm cancel buttonSmall">
+			<i class="glyphicon glyphicon-ban-circle"></i>
+			<span>Отмена</span>
+		</button>
+		{% } %}
+	</td>
+</tr>
