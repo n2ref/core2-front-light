@@ -1,0 +1,17 @@
+{
+    "logo": "img/logo.gif",
+    "login": "login/login.html",
+    "login-registration": "login/registration.html",
+    "login-registration-complete": "login/registration-complete.html",
+    "login-restore": "login/restore.html",
+    "login-restore-complete": "login/restore-complete.html",
+    "login-index": "login/index.html",
+    "login-indexMobile": "login/indexMobile.html",
+    "index": "index2.tpl",
+    "indexMobile": "indexMobile2.tpl",
+    "menu": "menu.tpl",
+    "menuMobile": "menuMobile.tpl",
+    "html-navigation-divider": "html/navigation.divider.html",
+    "html-navigation-link": "html/navigation.link.html",
+    "html-navigation-dropdown": "html/navigation.dropdown.html"
+}
