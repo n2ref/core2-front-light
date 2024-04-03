@@ -48,7 +48,7 @@
 	<script type="text/javascript" src="core2/html/light/js/sweetalert2.min.js"></script>
 	<script type="text/javascript" src="core2/html/light/js/coreui.notice.js?_=1"></script>
 	<script type="text/javascript" src="core2/html/light/js/coreui.table.js?_=11"></script>
-	<script type="text/javascript" src="core2/html/light/js/coreui.panel.js?_=0"></script>
+	<script type="text/javascript" src="core2/html/light/js/coreui.panel.js?_=1"></script>
 	<script type="text/javascript" src="core2/html/light/js/coreui.tabs.js?_=0"></script>
 
 	<script type="text/javascript" src="core2/html/light/js/select2.min.js"></script>
