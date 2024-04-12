@@ -598,6 +598,9 @@ table.editTable {
     min-width: 190px;
     box-sizing: border-box;
 }
+.eFirstCell .fa.fa-info-circle {
+    cursor: help;
+}
 .newRulesModule {
 	text-decoration:underline;
 	cursor:pointer;
