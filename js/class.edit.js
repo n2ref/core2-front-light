@@ -231,6 +231,137 @@ var edit = {
 			}
 		}
 	},
+
+
+	changeForm: {
+
+		_forms: {},
+
+
+		/**
+		 * Показывает есть ли изменения в формах
+		 * @return {boolean}
+		 */
+		issetChanged: function () {
+
+			let issetChanges = false;
+
+			$.each(this._forms, function (formName, form) {
+				if (edit.changeForm.isChange(formName)) {
+					issetChanges = true;
+					return false;
+				}
+			});
+
+			return issetChanges;
+		},
+
+
+		/**
+		 * Проверка изменений в форме
+		 * @param {string} formName
+		 * @return {boolean}
+		 */
+		isChange: function (formName) {
+
+			if (this._forms.hasOwnProperty(formName) &&
+				! this._forms[formName].saveSuccess &&
+				(this._forms[formName].form[0] && document.getElementById(this._forms[formName].form.attr('id')))
+			) {
+				let formData  = this._forms[formName].data
+				let formData2 = xajax.getFormValues(this._forms[formName].form.attr('id'));
+
+				if (JSON.stringify(formData) !== JSON.stringify(formData2)) {
+					return true;
+				}
+			}
+
+			return false;
+		},
+
+
+		/**
+		 * Показать сообщение о несохраненных параметрах
+		 * @param {Array} loadArgs
+		 */
+		showConfirm: function (loadArgs) {
+
+			swal({
+				title : 'Ваши изменения не были сохранены',
+				text : 'Все равно покинуть страницу?',
+				type : 'warning',
+				showCancelButton  : true,
+				confirmButtonColor: '#f0ad4e',
+				confirmButtonText : 'Да, не сохранять',
+				cancelButtonText  : "Отмена"
+			}).then(function () {
+
+				edit.changeForm.removeListen();
+
+				if (loadArgs) {
+					load.apply(window, loadArgs);
+				}
+
+			}).catch(swal.noop);
+		},
+
+
+		/**
+		 * Добавляет проверку на изменение формы перед сменой страницы
+		 * @param {string} formName
+		 */
+		listen: function (formName) {
+
+			let form = $('#main_' + formName + '_mainform');
+
+			if ( ! form[0]) {
+				return;
+			}
+
+			if ( ! this._forms.hasOwnProperty(formName)) {
+				this._forms[formName] = {};
+			}
+
+			this._forms[formName] = {
+				form: form,
+				saveSuccess: false,
+				data: xajax.getFormValues(form.attr('id')),
+				unload: function(e) {
+					if (edit.changeForm.isChange(formName)) {
+						return 'Данные не будут сохранены';
+					}
+					return;
+				}
+			};
+
+
+			$(window).bind('beforeunload', this._forms[formName].unload);
+		},
+
+
+		/**
+		 * Убирает проверку на изменение формы перед сменой страницы
+		 * @param {string|undefined} formName
+		 */
+		removeListen: function (formName) {
+
+			if (typeof formName === 'string' && formName) {
+				if (this._forms.hasOwnProperty(formName)) {
+					$(window).unbind('beforeunload', this._forms[formName].unload);
+					delete this._forms[formName];
+				}
+
+			} else {
+				$.each(this._forms, function (formName, form) {
+					$(window).unbind('beforeunload', form.unload);
+				});
+
+				this._forms = {};
+			}
+		},
+	},
+
+
 	modalClear: function(id) {
 		document.getElementById(id).value = '';
 		document.getElementById(id + '_text').value = '';

@@ -296,10 +296,28 @@ $(document).ajaxSuccess(function (event, xhr, settings) {
 	}
 });
 
+
+/**
+ * Загрузка контента на страницу
+ * @param url
+ * @param data
+ * @param id
+ * @param callback
+ */
 var load = function (url, data, id, callback) {
-	preloader.show();
-	if (!id) id = '#main_body';
-	else if (typeof id === 'string') {
+
+	if ( ! id) {
+		if (edit.changeForm.issetChanged()) {
+			edit.changeForm.showConfirm(arguments);
+			return;
+		} else {
+			edit.changeForm.removeListen();
+		}
+
+		id = '#main_body';
+		preloader.show();
+
+	} else if (typeof id === 'string') {
 		id = '#' + id;
 	}
 	if (url.indexOf("index.php") === 0) {
