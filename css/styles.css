@@ -2623,12 +2623,26 @@ table.coreui-table .search-container .control-type-autocomplete input,
 table.coreui-table .search-container .control-type-autocomplete_table input {
     width: 180px;
 }
-table.coreui-table .search-container .control-type-autocomplete input.ui-autocomplete-loading ,
+table.coreui-table .search-container .control-type-autocomplete_table input {
+    display: inline-block;
+    padding-right: 25px;
+}
+table.coreui-table .search-container .control-type-autocomplete input.ui-autocomplete-loading,
 table.coreui-table .search-container .control-type-autocomplete_table input.ui-autocomplete-loading {
     background-image: url("../img/load.gif");
     background-position-y: center;
     background-position-x: 97%;
     background-repeat: no-repeat;
+}
+table.coreui-table .search-container .control-type-autocomplete_table .search-icon {
+    display: inline-block;
+    position: relative;
+    right: 25px;
+    color: #666;
+    top: 1px;
+}
+table.coreui-table .search-container .control-type-autocomplete_table input.ui-autocomplete-loading + .search-icon {
+    display: none;
 }
 table.coreui-table .column-switcher-container form  {
     margin-bottom: 10px;
