@@ -234,6 +234,116 @@ CoreUI.table = {
                     });
                 }
             }
+        },
+
+
+        field: {
+
+            /**
+             * Поле с периодами
+             * @param {jQuery}        container
+             * @param {string|number} key
+             * @param {string}        resource
+             * @param {boolean}       isAjax
+             */
+            datePeriods: function (container, resource, key, isAjax) {
+
+                let input = container.find('.input-daterangepicker');
+
+                input.daterangepicker({
+                    parentEl: container.find('.period-date-container'),
+                    opens: 'left',
+                    autoUpdateInput: false,
+                    locale: {
+                        format: 'DD.MM.YYYY',
+                        applyLabel: "Применить",
+                        cancelLabel: "Отмена",
+                        firstDay:1,
+                        daysOfWeek: [
+                            "Вс","Пн", "Вт", "Ср", "Чт", "Пт", "Сб"
+                        ],
+                        monthNames: [
+                            "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"
+                        ],
+                    }
+                }, function(start, end, label) {
+                    container.find('.period-value-start').val(start.format('YYYY-MM-DD'));
+                    container.find('.period-value-end').val(end.format('YYYY-MM-DD'));
+                    container.find('.period-input-all').remove();
+
+                    CoreUI.table.filter.submit(resource, isAjax)
+                });
+
+                container.find('.icon-calendar').click(function() {
+                    input.trigger("click");
+                });
+
+                container.find('.period-buttons input[name=period]').change(function () {
+                    let periodType  = $(this).data('type');
+                    let periodCount = $(this).data('count');
+
+                    let dateStartFormat = '';
+                    let dateStart       = '';
+                    let dateEndFormat   = '';
+                    let dateEnd         = '';
+
+
+                    container.find('.period-input-all').remove();
+
+                    if (periodType === 'all') {
+                        container.find('.period-value-end')
+                            .after('<input type="hidden" name="filter[' + resource + '][' + key + '][all]" value="1" class="period-input-all">');
+
+                    } else if (typeof periodCount === 'number' && periodCount >= 0) {
+                        let start = null;
+                        let end   = moment();
+
+                        switch (periodType) {
+                            case 'days':
+                                start = moment().subtract(periodCount, "days");
+                                break;
+
+                            case 'week':
+                                start = moment().subtract(periodCount, "weeks");
+                                start.weekday(0);
+                                break;
+
+                            case 'month':
+                                start = moment().subtract(periodCount, "months");
+                                start.date(1);
+                                break;
+
+                            case 'year':
+                                start = moment().subtract(periodCount, "years");
+                                start.set('month', 1);
+                                start.set('date', 1);
+                                break;
+
+                            default:
+                                throw new Error('Указан некорректный тип периода');
+                                break;
+                        }
+
+                        dateStartFormat = start.format('DD.MM.YYYY');
+                        dateEndFormat   = end.format('DD.MM.YYYY');
+                        dateStart       = start.format('YYYY-MM-DD');
+                        dateEnd         = end.format('YYYY-MM-DD');
+                    }
+
+                    if (dateStartFormat || dateEndFormat) {
+                        input.data('daterangepicker').setStartDate(dateStartFormat);
+                        input.data('daterangepicker').setEndDate(dateEndFormat);
+
+                    } else {
+                        input.val('');
+                    }
+
+                    container.find('.period-value-start').val(dateStart);
+                    container.find('.period-value-end').val(dateEnd);
+
+                    CoreUI.table.filter.submit(resource, isAjax)
+                });
+            }
         }
     },
 

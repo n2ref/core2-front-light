@@ -1,3 +1,10 @@
+<!-- BEGIN script_daterangepicker -->
+<link href="[THEME_SRC]/css/daterangepicker.min.css" type="text/css" rel="stylesheet">
+<script src="[THEME_SRC]/js/moment.min.js"></script>
+<script src="[THEME_SRC]/js/daterangepicker.min.js"></script>
+<!-- END script_daterangepicker -->
+
+
 <div class="coreui-table-wrapper [CLASS_MAX_HEIGHT]" id="table-[RESOURCE]-wrapper">
   <div class="preloader" style="display:none">
     <div class="lock-screen"></div>
@@ -52,6 +59,35 @@
                onchange="CoreUI.table.filter.submit('[RESOURCE]', [IS_AJAX]);" [ATTR]>
       </div>
       <!-- END date -->
+
+      <!-- BEGIN date_period -->
+      <div class="input-group period-[RESOURCE]-[KEY]">
+        <!-- BEGIN title -->
+        <div class="input-group-addon">[TITLE]</div>
+        <!-- END title -->
+
+        <!-- BEGIN periods -->
+        <div class="btn-group period-buttons" data-toggle="buttons">
+          <!-- BEGIN period -->
+          <label class="btn btn-sm btn-default [ACTIVE]">
+            <input type="radio" name="period" value="period_[PERIOD]"
+                   data-type="[TYPE]" data-count="[COUNT]" autocomplete="off" [CHECKED]> [TITLE]
+          </label>
+          <!-- END period -->
+        </div>
+        <!-- END periods -->
+
+        <input type="text" class="form-control input-sm text-right input-daterangepicker" value="[VALUE]" [ATTR]>
+        <span class="fa fa-caret-down icon-calendar"></span>
+
+        <input type="hidden" class="period-value-start" name="filter[[RESOURCE]][[KEY]][0]" value="[VALUE_START]">
+        <input type="hidden" class="period-value-end"   name="filter[[RESOURCE]][[KEY]][1]" value="[VALUE_END]">
+
+        <div class="period-date-container"></div>
+
+        <script> CoreUI.table.filter.field.datePeriods($('.period-[RESOURCE]-[KEY]'), '[RESOURCE]', '[KEY]', [IS_AJAX]); </script>
+      </div>
+      <!-- END date_period -->
 
       <!-- BEGIN date_one -->
       <div class="input-group">
