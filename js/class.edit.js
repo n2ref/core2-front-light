@@ -287,13 +287,13 @@ var edit = {
 		showConfirm: function (loadArgs) {
 
 			swal({
-				title : 'Ваши изменения не были сохранены',
-				text : 'Все равно покинуть страницу?',
+				title : 'Изменения не сохранены',
+				text : 'Вы уверены, что хотите покинуть страницу?',
 				type : 'warning',
 				showCancelButton  : true,
 				confirmButtonColor: '#f0ad4e',
-				confirmButtonText : 'Да, не сохранять',
-				cancelButtonText  : "Отмена"
+				confirmButtonText : 'Покинуть страницу',
+				cancelButtonText  : "Остаться"
 			}).then(function () {
 
 				edit.changeForm.removeListen();
